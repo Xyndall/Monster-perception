@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Tyrel/Scene/TyrelTesting.unity
+    guid: e763e4a5363aeb344bc0be598ba962d2
   m_configObjects: {}

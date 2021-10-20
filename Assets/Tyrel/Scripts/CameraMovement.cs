@@ -14,11 +14,14 @@ public class CameraMovement : MonoBehaviour
     public GameObject Player = null;
     public GameObject fpsCam = null;
 
+    public Text keyCard = null;
+
     void Start()
     {
         Cursor.lockState =  CursorLockMode.Locked;
         Cursor.visible = false;
 
+        keyCard.gameObject.SetActive(false);
     }
 
 
@@ -50,11 +53,33 @@ public class CameraMovement : MonoBehaviour
                     
                     GameObject keyCard = hit.collider.gameObject;
 
-                    Instantiate(keyCard,  transform.position + transform.forward * 1.5f - Vector3.up, transform.rotation, fpsCam.transform);
+                    Instantiate(keyCard,  transform.position + transform.forward * 1.5f - Vector3.up * 0.8f, transform.rotation, fpsCam.transform);
                     Destroy(hit.collider.gameObject);
                 }
             }
         }
+        
+        RaycastHit hit1;
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit1, 20))
+        {
+            if (hit1.collider.tag == "KeyCard")
+            {
+                
+                keyCard.gameObject.SetActive(true);
+                
+                
+            }
+            else
+            {
+                keyCard.gameObject.SetActive(false);
+            }
+            
+            
+            
+        }
+
+        
 
     }
 

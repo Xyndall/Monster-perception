@@ -12,9 +12,9 @@ public class CharacterController : MonoBehaviour
 
     public CharacterController controller;
 
-    public float speed = 8;
-    float runSpeed = 20;
-    float normalSpeed = 8;
+    public float speed = 5;
+    public float runSpeed = 10;
+    public float normalSpeed = 8;
     public float gravity = -9.8f;
 
     public float stamina = 5f;
@@ -25,13 +25,26 @@ public class CharacterController : MonoBehaviour
     bool sprinting = false;
     bool regenerated = true;
 
-    Vector3 velocity;
+    AudioSource aSource = null;
+
+    bool IsMoveing;
+    
+    float walkStepLength = 0.75f;
+    float runStepLength = 0.25f;
+
+    public AudioClip[] aClips = null;
+
+    
+
+    public float timerMax = 1f;
+    public float timer = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        aSource = GetComponent<AudioSource>();
 
-        
+        timer = runStepLength;
     }
 
     // Update is called once per frame
@@ -53,13 +66,15 @@ public class CharacterController : MonoBehaviour
             if (regenerated == true)
             {
                 sprinting = true;
+                
+                PlayRunning();
                 stamina -= staminaDrain * Time.deltaTime;
                 UpdateStamina(1);
-                fpsCamera.GetComponentInChildren<Camera>().fieldOfView = 75;
+                fpsCamera.GetComponentInChildren<Camera>().fieldOfView = 65;
                 speed = runSpeed;
                 if (stamina <= 0)
                 {
-
+                    
                     regenerated = false;
                     sprinting = false;
                     sliderGroup.alpha = 0;
@@ -72,6 +87,23 @@ public class CharacterController : MonoBehaviour
         }
 
         
+
+        if (move != Vector3.zero && sprinting == false)
+        {
+            IsMoveing = true;
+        }
+        else
+        {
+            IsMoveing = false;
+        }
+
+
+
+        if (IsMoveing == true)
+        {
+            
+            PlayWalking();
+        }
         
         if (sprinting == false)
         {
@@ -93,6 +125,54 @@ public class CharacterController : MonoBehaviour
         }
 
 
+        
+
+    }
+
+    void PlayWalking()
+    {
+        int aIndex = Random.Range(0, aClips.Length);
+
+        
+        
+        timer -= Time.deltaTime;
+        if(timer < 0)
+        {
+
+            timer = walkStepLength;
+            aSource.clip = aClips[aIndex];
+
+            PlayFootSteps(aClips[aIndex]);
+        }
+        
+
+        
+    }
+
+
+    void PlayRunning()
+    {
+        int aIndex = Random.Range(0, aClips.Length);
+
+        if (sprinting == true)
+        {
+            timer = runStepLength;
+        }
+
+        timer -= Time.deltaTime;
+        if (timer < 0)
+        {
+
+            timer = runStepLength;
+            aSource.clip = aClips[aIndex];
+
+            PlayFootSteps(aClips[aIndex]);
+        }
+    }
+    
+    void PlayFootSteps(AudioClip clip)
+    {
+        aSource.PlayOneShot(clip);
     }
 
     //public void Sprinting()

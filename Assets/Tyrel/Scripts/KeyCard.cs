@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class KeyCard : MonoBehaviour
 {
+
+    public GameManager manager = null;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        manager.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -15,4 +19,13 @@ public class KeyCard : MonoBehaviour
     {
         
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Door")
+        {
+            manager.GameCompleted();
+        }
+    }
+
 }
