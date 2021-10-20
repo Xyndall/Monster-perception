@@ -5,59 +5,81 @@ using UnityEngine.AI;
 
 public class AiBehaviour : MonoBehaviour
 {
+    public enum Tracking { Patrol, Chase}
+    public Tracking trackType = Tracking.Patrol;
+
+
+    //Monster
     public NavMeshAgent Monster;
-
+    //Player
     public Transform Player;
-
-    public LayerMask WhatisGround, WhatisPlayer;
+    //Layer Recognize
+    public LayerMask GroundMask, PlayerMask;
 
     //Patrol
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public Transform[] points;
+    int current;
+
+    public float range = 0.5f;
+    int i = 0;
 
     //State
     public float sightRange;
-    public bool playerInSight;
 
     private void Start()
     {
         Player = GameObject.Find("Player").transform;
         Monster = GetComponent<NavMeshAgent>();
+        Monster.SetDestination(points[i].position);
     }
 
     private void Update()
     {
-        //If Player is in Line of Sight
-        playerInSight = Physics.CheckSphere(transform.position, sightRange, WhatisPlayer);
+        //Set boolean to true if player in sight
+        bool playerInSight = Physics.CheckSphere(transform.position, sightRange, PlayerMask);
+        
+        //Assign enum to track or chase dependant on playerInSight
+        if (playerInSight)
+        {
+            trackType = Tracking.Chase;
+        }
+        else
+        {
+            trackType = Tracking.Patrol;
+        }
 
-        //States that Monster can switch to
-        if (!playerInSight) Patrol();
-        if (playerInSight) ChasePlayer();
+        //Run movement function based on enum trackType
+        switch (trackType)
+        {
+            case Tracking.Patrol:
+                Patrol();
+                break;
+            case Tracking.Chase:
+                ChasePlayer();
+                break;
+        }
     }
 
     //Monster Patrol System
     private void Patrol()
     {
-        if (!walkPointSet) SearchWalkPoint();
+        if (Monster.remainingDistance < range)
+        {
+            if(i == 1)
+            {
+                i = 0;
+                Monster.SetDestination(points[i].position);
+            }
+            else
+            {
+                i = 1;
+                Monster.SetDestination(points[i].position);
+            }
+        }
 
-        if (walkPointSet) Monster.SetDestination(walkPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //WalkPoint
-        if (distanceToWalkPoint.magnitude < -1f) walkPointSet = false;
-    }
-
-    private void SearchWalkPoint()
-    {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, WhatisGround)) walkPointSet = true;
     }
 
     private void ChasePlayer()
