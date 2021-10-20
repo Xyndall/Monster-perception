@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Phoenix/Scene/AI_Test.unity
+    guid: 17b51133753db3345a86100ee5cfe665
+  - enabled: 1
+    path: Assets/Phoenix/Scene/GameOver.unity
+    guid: c2f3eb7219ed18f479a77f9361a09b9f
   m_configObjects: {}
