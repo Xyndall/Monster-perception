@@ -6,6 +6,7 @@ TagManager:
   tags:
   - KeyCard
   - Door
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - 
   - 
   - Postprocessing
-  - 
-  - 
+  - Ground
+  - Player
   - 
   - 
   - 
