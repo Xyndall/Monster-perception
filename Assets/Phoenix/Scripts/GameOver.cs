@@ -12,8 +12,10 @@ public class GameOver : MonoBehaviour
         //EndGame is true launch the Game Over Screen
         if (EndGame == false)
         {
+            Cursor.visible = true;
             EndGame = true;
             GameOverScreen();
+            
         }
     }
     //Send Player to the Next Scene

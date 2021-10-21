@@ -13,6 +13,7 @@ public class AiBehaviour : MonoBehaviour
     public NavMeshAgent Monster;
     //Player
     public Transform Player;
+    
     //Layer Recognize
     public LayerMask GroundMask, PlayerMask;
 
@@ -29,14 +30,15 @@ public class AiBehaviour : MonoBehaviour
     //State
     public float sightRange;
 
-    private void Start()
+    void Start()
     {
+        
         Player = GameObject.Find("Player").transform;
         Monster = GetComponent<NavMeshAgent>();
         Monster.SetDestination(points[i].position);
     }
 
-    private void Update()
+    void Update()
     {
         //Set boolean to true if player in sight
         bool playerInSight = Physics.CheckSphere(transform.position, sightRange, PlayerMask);
@@ -45,10 +47,12 @@ public class AiBehaviour : MonoBehaviour
         if (playerInSight)
         {
             trackType = Tracking.Chase;
+            Monster.speed = 10;
         }
         else
         {
             trackType = Tracking.Patrol;
+            Monster.speed = 5;
         }
 
         //Run movement function based on enum trackType
