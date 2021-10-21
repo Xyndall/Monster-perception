@@ -9,7 +9,7 @@ public class lights : MonoBehaviour
     public bool monstermove = false;
     bool lightswitch = false;
 
-    float timewhitelight = 20;
+    float timewhitelight = 5;
     float timeredlight = 10;
 
 
@@ -40,17 +40,17 @@ public class lights : MonoBehaviour
             timewhitelight -= Time.deltaTime;
             timeredlight = 10;
             Lightcolor.color = new Color(1, 1, 1, 1);
-            Debug.Log("White light timer " + timewhitelight);
+            //Debug.Log("White light timer " + timewhitelight);
             monstermove = false;
         }
 
         if(lightswitch == true)
         {
             timeredlight -= Time.deltaTime;
-            timewhitelight = 20;
-            Debug.Log(timeredlight + "Red Light");
+            timewhitelight = 5;
+            //Debug.Log(timeredlight + "Red Light");
             Lightcolor.color = new Color(1, 0, 0, 1);
-            Debug.Log("Red light timer " + timeredlight);
+            //Debug.Log("Red light timer " + timeredlight);
             monstermove = true;
         }
 

@@ -37,6 +37,7 @@ public class CameraMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
 
+        Debug.DrawRay(transform.position, transform.forward);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {

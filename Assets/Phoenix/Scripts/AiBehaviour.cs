@@ -8,6 +8,7 @@ public class AiBehaviour : MonoBehaviour
     public enum Tracking { Patrol, Chase}
     public Tracking trackType = Tracking.Patrol;
 
+    public lights lighting;
 
     //Monster
     public NavMeshAgent Monster;
@@ -32,7 +33,7 @@ public class AiBehaviour : MonoBehaviour
 
     void Start()
     {
-        
+        lighting.GetComponent<lights>();
         Player = GameObject.Find("Player").transform;
         Monster = GetComponent<NavMeshAgent>();
         Monster.SetDestination(points[i].position);
@@ -43,28 +44,39 @@ public class AiBehaviour : MonoBehaviour
         //Set boolean to true if player in sight
         bool playerInSight = Physics.CheckSphere(transform.position, sightRange, PlayerMask);
         
-        //Assign enum to track or chase dependant on playerInSight
-        if (playerInSight)
+        if(lighting.monstermove == true)
         {
-            trackType = Tracking.Chase;
-            Monster.speed = 10;
+            if (playerInSight)
+            {
+                trackType = Tracking.Chase;
+                Monster.speed = 10;
+            }
+            else
+            {
+                trackType = Tracking.Patrol;
+                Monster.speed = 5;
+            }
+
+            //Run movement function based on enum trackType
+            switch (trackType)
+            {
+                case Tracking.Patrol:
+                    Patrol();
+                    break;
+                case Tracking.Chase:
+                    ChasePlayer();
+                    break;
+            }
+            
+
         }
         else
         {
-            trackType = Tracking.Patrol;
-            Monster.speed = 5;
+            Monster.speed = 0;
         }
 
-        //Run movement function based on enum trackType
-        switch (trackType)
-        {
-            case Tracking.Patrol:
-                Patrol();
-                break;
-            case Tracking.Chase:
-                ChasePlayer();
-                break;
-        }
+        //Assign enum to track or chase dependant on playerInSight
+
     }
 
     //Monster Patrol System
@@ -72,16 +84,12 @@ public class AiBehaviour : MonoBehaviour
     {
         if (Monster.remainingDistance < range)
         {
-            if(i == 1)
+            i++;
+            if(i == points.Length)
             {
                 i = 0;
-                Monster.SetDestination(points[i].position);
             }
-            else
-            {
-                i = 1;
-                Monster.SetDestination(points[i].position);
-            }
+            Monster.SetDestination(points[i].position);
         }
 
     }
