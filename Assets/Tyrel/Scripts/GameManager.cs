@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public void GameCompleted()
     {
         Debug.Log("hit");
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
 
 }

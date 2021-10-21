@@ -6,9 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Phoenix/Scene/GameOver.unity
-    guid: c2f3eb7219ed18f479a77f9361a09b9f
+    path: Assets/Kyle/Menu/Main Menu.unity
+    guid: e1caeb68c8a61c746b1358d7f02015ce
   - enabled: 1
-    path: Assets/Phoenix/Scene/AI_Test.unity
-    guid: 17b51133753db3345a86100ee5cfe665
+    path: Assets/Kyle/Menu/Options.unity
+    guid: 995599c583766ea42957345e2ef81148
+  - enabled: 1
+    path: Assets/Kyle/Scene/Kyle Level.unity
+    guid: fa45dae83312fea4e91408f2b38586ee
+  - enabled: 1
+    path: Assets/Kyle/Menu/DeathSrceen.unity
+    guid: 4308e84b3367f834f8a237b1cefd4a28
+  - enabled: 1
+    path: Assets/Kyle/Menu/Win.unity
+    guid: f7e436d183b820d42b8fc3af50cc9a71
   m_configObjects: {}
