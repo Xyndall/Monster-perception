@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CharacterController : MonoBehaviour
 {
+
+    public PostProcessVolume Volume;
 
     public Image staminaBar = null;
     public CanvasGroup sliderGroup = null;
@@ -34,7 +37,7 @@ public class CharacterController : MonoBehaviour
 
     public AudioClip[] aClips = null;
 
-    
+    Vignette vignette = null;
 
     public float timerMax = 1f;
     public float timer = 0;
@@ -42,14 +45,20 @@ public class CharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Volume.GetComponent<PostProcessVolume>();
+        Volume.profile.TryGetSettings(out vignette);
+
         aSource = GetComponent<AudioSource>();
 
         timer = runStepLength;
+        vignette.enabled.value = true;
+        vignette.intensity.value = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         fpsCamera.GetComponentInChildren<Camera>().fieldOfView = 60;
 
         float x = Input.GetAxis("Horizontal");
@@ -72,6 +81,7 @@ public class CharacterController : MonoBehaviour
                 UpdateStamina(1);
                 fpsCamera.GetComponentInChildren<Camera>().fieldOfView = 65;
                 speed = runSpeed;
+                vignette.intensity.value = 1/ stamina;
                 if (stamina <= 0)
                 {
                     
@@ -83,6 +93,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
+            vignette.intensity.value = 0 / stamina;
             sprinting = false;
         }
 
@@ -138,7 +149,7 @@ public class CharacterController : MonoBehaviour
         timer -= Time.deltaTime;
         if(timer < 0)
         {
-
+            
             timer = walkStepLength;
             aSource.clip = aClips[aIndex];
 
@@ -154,7 +165,7 @@ public class CharacterController : MonoBehaviour
     {
         int aIndex = Random.Range(0, aClips.Length);
 
-        if (sprinting == true)
+        if (sprinting == true && timer < 0)
         {
             timer = runStepLength;
         }
@@ -162,7 +173,7 @@ public class CharacterController : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer < 0)
         {
-
+            
             timer = runStepLength;
             aSource.clip = aClips[aIndex];
 
@@ -172,7 +183,9 @@ public class CharacterController : MonoBehaviour
     
     void PlayFootSteps(AudioClip clip)
     {
+        
         aSource.PlayOneShot(clip);
+        
     }
 
     //public void Sprinting()
