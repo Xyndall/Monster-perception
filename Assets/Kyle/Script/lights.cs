@@ -12,15 +12,11 @@ public class lights : MonoBehaviour
     float timewhitelight = 5;
     float timeredlight = 10;
 
-
-
-
-
     // Start is called before the first frame update
     void Start()
     {
        Lightcolor = gameObject.GetComponent<Light>();
-     }
+    }
 
     // Update is called once per frame
     void Update()

@@ -28,7 +28,7 @@ public class AiBehaviour : MonoBehaviour
     public float range = 0.5f;
     int i = 0;
 
-    //State
+    //Sight of Player
     public float sightRange;
 
     void Start()
