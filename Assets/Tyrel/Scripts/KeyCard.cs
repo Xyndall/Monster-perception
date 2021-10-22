@@ -25,6 +25,7 @@ public class KeyCard : MonoBehaviour
         if(collision.gameObject.tag == "Door")
         {
             manager.GameCompleted();
+            Destroy(gameObject);
         }
     }
 

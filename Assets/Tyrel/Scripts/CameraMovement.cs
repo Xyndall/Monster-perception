@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CameraMovement : MonoBehaviour
 {
     public float mouseSensitivity = 100f;
+    public LayerMask LayersToCheck;
 
     public Transform playerBody;
     float rotationX = 0f;
@@ -27,7 +28,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-
+        
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -37,15 +38,15 @@ public class CameraMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
 
-        Debug.DrawRay(transform.position, transform.forward);
+        //Debug.DrawRay(transform.position, transform.forward, Color.green, 20);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             
 
             RaycastHit hit;
-
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 10))
+            
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 10,LayersToCheck))
             {
 
                 if(hit.collider.tag == "KeyCard")
@@ -54,7 +55,7 @@ public class CameraMovement : MonoBehaviour
                     
                     GameObject keyCard = hit.collider.gameObject;
 
-                    Instantiate(keyCard,  transform.position + transform.forward * 1.5f - Vector3.up * 0.8f, transform.rotation, fpsCam.transform);
+                    Instantiate(keyCard,  transform.position + transform.forward  - Vector3.up * 0.8f, transform.rotation, fpsCam.transform);
                     Destroy(hit.collider.gameObject);
                 }
             }
@@ -62,8 +63,9 @@ public class CameraMovement : MonoBehaviour
         
         RaycastHit hit1;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit1, 20))
+        if (Physics.Raycast(transform.position, transform.forward, out hit1, 10,LayersToCheck))
         {
+            
             if (hit1.collider.tag == "KeyCard")
             {
                 
