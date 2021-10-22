@@ -8351,11 +8351,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5840222382976400233, guid: 4f679ebe02840bc4cbc56a444aefb9da, type: 3}
       propertyPath: Priority
-      value: 135
+      value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 5840222382976400233, guid: 4f679ebe02840bc4cbc56a444aefb9da, type: 3}
       propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
-      value: 0.03888889
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5840222382976400233, guid: 4f679ebe02840bc4cbc56a444aefb9da, type: 3}
       propertyPath: rolloffMode

@@ -81,7 +81,7 @@ public class CharacterController : MonoBehaviour
                 UpdateStamina(1);
                 fpsCamera.GetComponentInChildren<Camera>().fieldOfView = 65;
                 speed = runSpeed;
-                vignette.intensity.value = 1/ stamina;
+                //vignette.intensity.value = 0.2f/ stamina;
                 if (stamina <= 0)
                 {
                     
@@ -93,7 +93,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            vignette.intensity.value = 0 / stamina;
+            //vignette.intensity.value = 0 / stamina;
             sprinting = false;
         }
 

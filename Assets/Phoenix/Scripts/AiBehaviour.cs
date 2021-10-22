@@ -8,6 +8,8 @@ public class AiBehaviour : MonoBehaviour
     public enum Tracking { Patrol, Chase}
     public Tracking trackType = Tracking.Patrol;
 
+    public AudioSource Asource = null;
+
     public lights lighting;
 
     //Monster
@@ -37,6 +39,7 @@ public class AiBehaviour : MonoBehaviour
         Player = GameObject.Find("Player").transform;
         Monster = GetComponent<NavMeshAgent>();
         Monster.SetDestination(points[i].position);
+        Asource.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -50,6 +53,7 @@ public class AiBehaviour : MonoBehaviour
             {
                 trackType = Tracking.Chase;
                 Monster.speed = 10;
+                Asource.volume = 0.2f;
             }
             else
             {
